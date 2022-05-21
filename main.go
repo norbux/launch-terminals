@@ -2,7 +2,6 @@ package main
 
 import (
 	"log"
-	"os"
 	"os/exec"
 	"time"
 )
@@ -16,22 +15,28 @@ func CheckError(e error) {
 func main() {
 	log.Println("testing commands...")
 
-	//cmd := exec.Command("cmd", "sub/main.exe")
 	cmd := &exec.Cmd{
 		Path: "cmd",
 		// Using cmd
-		Args: []string{"/c", "start", "cmd", "/k", ".\\sub\\main.exe"},
+		Args: []string{"/c", "start", "cmd", "/k", ".\\external-prog-1\\main.exe"},
 
 		// Using wt
-		// Args: []string{"/c start wt sub/main.exe"},
+		// Args: []string{"/c start wt external-prog-1/main.exe"},
 	}
-	//cmd.Stdin = strings.NewReader("sub/main.exe")
 
-	cmd.Stderr = os.Stderr
-	cmd.Stdout = os.Stdout
-
-	// err := cmd.Run()
 	err := cmd.Start()
+	CheckError(err)
+
+	cmd2 := &exec.Cmd{
+		Path: "cmd",
+		// Using cmd
+		Args: []string{"/c", "start", "cmd", "/k", ".\\external-prog-2\\main.exe"},
+
+		// Using wt
+		// Args: []string{"/c start wt external-prog-2/main.exe"},
+	}
+
+	err = cmd2.Start()
 	CheckError(err)
 
 	time.Sleep(10 * time.Second)

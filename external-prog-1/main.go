@@ -16,7 +16,6 @@ func checkError(e error) {
 func main() {
 	log.Println("sub program...")
 
-	//cmd := exec.Command("ping", "-n", "8", "127.0.0.1")
 	cmd := exec.Command("dapr")
 	cmd.Stderr = os.Stderr
 	cmd.Stdout = os.Stdout
